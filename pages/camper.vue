@@ -10,9 +10,9 @@ const products = ref([
 </script>
 
 <template>
-  <div>
-    <h1>Matériel de camping et bivouac</h1>
-    <table>
+  <div class="overflow-x-auto">
+    <h1 class="text-2xl font-bold m-4">Matériel de camping et bivouac</h1>
+    <table class="table table-zebra">
       <thead>
         <tr>
           <th>Nom du produit</th>
