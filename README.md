@@ -1,4 +1,4 @@
-# Optimal gear
+# Optimal bikes
 
 Framework used: [Nuxt 3](https://nuxt.com/docs/getting-started/introduction)
 
