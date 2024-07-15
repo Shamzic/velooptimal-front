@@ -1,6 +1,6 @@
 
 <template>
-    <div class="navbar bg-base-200">
+  <div class="navbar bg-base-200">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -12,16 +12,17 @@
         <li><NuxtLink to="/road">Route</NuxtLink></li>
       </ul>
     </div>
-    <NuxtLink to="/" class="btn btn-success glass text-xl">Optimal Bikes</NuxtLink>
+    <NuxtLink to="/" class="ml-4 text-xl font-bold tracking-widest inline-block mr-4 py-2 whitespace-nowrap uppercase text-white ">VELOOPTIMAL</NuxtLink>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1 space-x-2">
-        <NuxtLink class="btn btn-success glass" to="/gravel">Gravel</NuxtLink>
-        <NuxtLink class="btn btn-success glass" to="/mtb">VTT</NuxtLink>
-        <NuxtLink class="btn btn-success glass" to="/road">Route</NuxtLink>
+        <NuxtLink class="btn text-xl" to="/gravel">GRAVEL</NuxtLink>
+        <NuxtLink class="btn text-xl" to="/mtb">VTT</NuxtLink>
+        <NuxtLink class="btn text-xl" to="/road">ROUTE</NuxtLink>
     </ul>
   </div>
 </div>
+<!-- <navbar /> -->
 </template>
 
 <script setup>
