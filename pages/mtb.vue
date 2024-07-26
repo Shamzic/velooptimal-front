@@ -1,32 +1,20 @@
+<script setup lang="ts">
+import ProductCard from '../components/cards/product-card.vue';
+import type { Product  } from '@/types/products.js';
 
-<script setup>
-import { ref } from 'vue';
-
-const products = ref([
-  { id: 1, name: 'Produit 1', price: 10, url: 'https://example.com/produit1' },
-  { id: 2, name: 'Produit 2', price: 20, url: 'https://example.com/produit2' },
-  { id: 3, name: 'Produit 3', price: 30, url: 'https://example.com/produit3' },
-]);
+const products: Product[] = [
+  { id: 0, brand: 'Rockrider', model: 'EXPL 500', price: 499, url: 'https://www.decathlon.fr/p/velo-vtt-randonnee-expl-500-29/_/R-p-330628?mc=8615848&c=noir', imgSrc: 'https://contents.mediadecathlon.com/p2623157/k$56a387f834df8816d5aabd60fd676bba/sq/velo-vtt-randonnee-expl-500-noir-29.jpg?format=auto&f=1200x1200'},
+  { id: 1, brand: 'Triban', model: 'GRVL 120', price: 800, url: 'https://www.decathlon.fr/p/velo-gravel-triban-grvl-120/_/R-p-312397?mc=8575940&c=vert', imgSrc: 'https://contents.mediadecathlon.com/p1956473/k$16ac0a30a404e2ecf763d5d98f8dec80/sq/velo-gravel-triban-grvl-520-homme-subcompact.jpg?format=auto&f=1200x1200'},
+  { id: 2, brand: 'Triban', model: 'GRVL 520', price: 1200, url: 'https://www.decathlon.fr/p/velo-gravel-triban-grvl-520-homme-subcompact/_/R-p-313015?mc=8587697', imgSrc:'https://contents.mediadecathlon.com/p2579595/k$a4d99da7969620f9715ba2c7ad39b833/sq/velo-gravel-triban-grvl-120.jpg?format=auto&f=1200x1200' },
+];
 </script>
 
 <template>
   <div class="overflow-x-auto">
-    <h1 class="text-2xl font-bold m-4">Vélos tous terrains</h1>
-    <table class="table table-zebra">
-      <thead>
-        <tr>
-          <th>Nom du produit</th>
-          <th>Prix</th>
-          <th>URL</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td>{{ product.name }}</td>
-          <td>{{ product.price }}</td>
-          <td><a :href="product.url" target="_blank">{{ product.url }}</a></td>
-        </tr>
-      </tbody>
-    </table>
+    <h1 class="text-2xl font-bold m-4">Vélos de gravel</h1>
+     <div class="p-4 flex flex-row space-x-4">
+      <product-card v-for="product in products" :key="product.id" :product="product" />
+    </div>
   </div>
 </template>
+
