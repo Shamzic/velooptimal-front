@@ -17,12 +17,14 @@ import MenuCard from '../components/cards/menu-card.vue'
         title="Simulateur"
         description="Déterminez en quelques secondes le vélo optimal pour vous et votre pratique ?"
         buttonLabel="Faire une simulation"
+        buttonRedirect="/simulator"
       />
       <menu-card
         imgSrc="/img/best-bike-card.jpeg"
         title="Comparateur"
         description="Classement des meilleurs vélos en fonction de votre budget"
         buttonLabel="Voir les vélos"
+        buttonRedirect="/gravel"
       />
     </div>
   </div>

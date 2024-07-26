@@ -1,13 +1,11 @@
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
-
-const props = defineProps({
+defineProps({
     imgSrc: String,
     title: String,
     description: String,
-    buttonLabel: String
+    buttonLabel: String,
+    buttonRedirect: String
 })
 </script>
 
@@ -22,7 +20,7 @@ const props = defineProps({
     <h2 class="card-title">{{title}}</h2>
     <p>{{description}}</p>
     <div class="card-actions justify-end">
-      <button class="btn">{{ buttonLabel }}</button>
+      <a :href="buttonRedirect" class="btn">{{ buttonLabel }}</a>
     </div>
   </div>
 </div>
