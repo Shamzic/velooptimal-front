@@ -210,9 +210,9 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5">
-    <main class="flex-1 flex flex-col">
-      <div class="container mx-auto px-4 py-4 sm:py-8 mt-16">
+  <div class="flex flex-col bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5">
+    <main class="flex-1">
+      <div class="container mx-auto px-4 py-4 sm:py-8 mt-16 mb-8">
         <div class="max-w-3xl mx-auto">
           <!-- En-tête animé -->
           <div class="text-center mb-8 sm:mb-12 animate-fade-in">

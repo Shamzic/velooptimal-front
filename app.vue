@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout>
-  <div class="flex flex-col h-screen justify-between">
-    <Header class="h-32" />
-    <NuxtPage class="grow" />
-    <Footer  class="h-56" />
-  </div>
-</NuxtLayout>
+    <div class="min-h-screen flex flex-col">
+      <Header class="flex-none" />
+      <NuxtPage class="flex-grow" />
+      <Footer class="flex-none mt-8" />
+    </div>
+  </NuxtLayout>
 </template>
