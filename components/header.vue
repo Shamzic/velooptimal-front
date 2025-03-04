@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref } from 'vue';
 
@@ -12,7 +11,7 @@ const pages = [
 
 </script>
 <template>
-  <div class="navbar bg-base-200">
+  <div class="navbar bg-base-200 fixed top-0 left-0 right-0 z-50">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
