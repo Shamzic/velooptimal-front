@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductCard from '../components/cards/product-card.vue';
-import type { Product  } from '@/types/products.js';
+import BikesList from '../components/pages/bikes-list.vue';
+import type { Product } from '@/types/products.js';
 
 const products: Product[] = [
   { 
@@ -31,10 +31,14 @@ const products: Product[] = [
 </script>
 
 <template>
-  <div class="overflow-x-auto">
-    <h1 class="text-2xl font-bold m-4">Vélos pliants</h1>
-    <div class="p-4 flex flex-row space-x-4">
-      <product-card v-for="product in products" :key="product.id" :product="product" />
-    </div>
-  </div>
-</template> 
+  <bikes-list
+    title="Vélos pliants"
+    :products="products"
+  />
+</template>
+
+<style scoped>
+.grid {
+  scroll-padding: 1rem;
+}
+</style> 

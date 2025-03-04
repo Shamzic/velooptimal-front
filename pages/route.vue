@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductCard from '../components/cards/product-card.vue';
-import type { Product  } from '@/types/products.js';
+import BikesList from '../components/pages/bikes-list.vue';
+import type { Product } from '@/types/products.js';
 
 const products: Product[] = [
   { id: 0, brand: 'Nakamura', model: 'Allroad 250', price: 1199.99, url: 'https://www.intersport.fr/velo_gravel_adulte_allroad_250-nakamura-p-YF60H6~8QQ/', imgSrc: 'https://www.transitionvelo.com/content/uploads/2024/04/Nakamura-Allroad-250.jpg'},
@@ -10,10 +10,14 @@ const products: Product[] = [
 </script>
 
 <template>
-  <div class="overflow-x-auto">
-    <h1 class="text-2xl font-bold m-4">Vélos de route</h1>
-     <div class="p-4 flex flex-row space-x-4">
-      <product-card v-for="product in products" :key="product.id" :product="product" />
-    </div>
-  </div>
-</template> 
+  <bikes-list
+    title="Vélos de route"
+    :products="products"
+  />
+</template>
+
+<style scoped>
+.grid {
+  scroll-padding: 1rem;
+}
+</style> 

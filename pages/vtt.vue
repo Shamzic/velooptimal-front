@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductCard from '../components/cards/product-card.vue';
-import type { Product  } from '@/types/products.js';
+import BikesList from '../components/pages/bikes-list.vue';
+import type { Product } from '@/types/products.js';
 
 const products: Product[] = [
   { id: 0, brand: 'Rockrider', model: 'EXPL 500', price: 499, url: 'https://www.decathlon.fr/p/velo-vtt-randonnee-expl-500-29/_/R-p-330628?mc=8615848&c=noir', imgSrc: 'https://contents.mediadecathlon.com/p2623157/k$56a387f834df8816d5aabd60fd676bba/sq/velo-vtt-randonnee-expl-500-noir-29.jpg?format=auto&f=1200x1200'},
@@ -10,10 +10,14 @@ const products: Product[] = [
 </script>
 
 <template>
-  <div class="overflow-x-auto">
-    <h1 class="text-2xl font-bold m-4">Vélos tout-terrain</h1>
-     <div class="p-4 flex flex-row space-x-4">
-      <product-card v-for="product in products" :key="product.id" :product="product" />
-    </div>
-  </div>
-</template> 
+  <bikes-list
+    title="Vélos tout-terrain"
+    :products="products"
+  />
+</template>
+
+<style scoped>
+.grid {
+  scroll-padding: 1rem;
+}
+</style> 
