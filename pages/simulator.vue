@@ -198,7 +198,7 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
 
 <template>
   <div class="flex flex-col min-h-screen bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5">
-    <main class="flex-1 flex flex-col relative pb-40">
+    <main class="flex-1 flex flex-col">
       <div class="container mx-auto px-4 py-8 mt-16">
         <div class="max-w-3xl mx-auto">
           <!-- En-tête animé -->
@@ -221,7 +221,7 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
           </div>
 
           <!-- Section Questions avec Transitions -->
-          <div v-if="!showResult" class="relative min-h-[600px] overflow-hidden">
+          <div v-if="!showResult" class="relative min-h-[500px] overflow-hidden">
             <TransitionGroup
               :enter-active-class="slideEnterActiveClass"
               :enter-from-class="slideEnterFromClass"
@@ -255,7 +255,7 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
           </div>
 
           <!-- Section Résultats avec Animations -->
-          <div v-else class="space-y-8 animate-fade-in">
+          <div v-else class="space-y-6 animate-fade-in pb-32">
             <!-- Résultat Principal -->
             <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div class="card-body items-center text-center">
