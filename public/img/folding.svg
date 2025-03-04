@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cadre avec charnière -->
+  <path d="M200 300 L350 300" stroke="#777" stroke-width="15" fill="none"/>
+  <path d="M350 300 L450 220" stroke="#777" stroke-width="15" fill="none" stroke-dasharray="5,5"/>
+  <path d="M450 220 L600 300" stroke="#777" stroke-width="15" fill="none"/>
+  <!-- Charnière -->
+  <circle cx="350" cy="300" r="10" stroke="#777" stroke-width="4" fill="white"/>
+  <circle cx="450" cy="220" r="10" stroke="#777" stroke-width="4" fill="white"/>
+  <!-- Roue avant (plus petite) -->
+  <circle cx="600" cy="300" r="70" stroke="#777" stroke-width="8" fill="none"/>
+  <circle cx="600" cy="300" r="10" fill="#777"/>
+  <!-- Roue arrière (plus petite) -->
+  <circle cx="200" cy="300" r="70" stroke="#777" stroke-width="8" fill="none"/>
+  <circle cx="200" cy="300" r="10" fill="#777"/>
+  <!-- Guidon pliable -->
+  <path d="M450 220 L470 200" stroke="#777" stroke-width="12" fill="none"/>
+  <path d="M470 200 L490 220" stroke="#777" stroke-width="12" fill="none" stroke-dasharray="5,5"/>
+  <!-- Selle rétractable -->
+  <path d="M350 300 L340 260" stroke="#777" stroke-width="12" fill="none"/>
+  <path d="M340 260 L370 260" stroke="#777" stroke-width="12" fill="none"/>
+  <!-- Pédalier -->
+  <circle cx="350" cy="300" r="25" stroke="#777" stroke-width="8" fill="none"/>
+  <!-- Texte -->
+  <text x="400" y="450" font-family="Arial" font-size="48" text-anchor="middle" fill="#777">PLIANT</text>
+  <!-- Flèches de pliage -->
+  <path d="M380 350 C400 350 400 380 380 380" stroke="#777" stroke-width="3" fill="none"/>
+  <path d="M380 380 L375 375 L380 380 L385 375" stroke="#777" stroke-width="3" fill="none"/>
+</svg> 
