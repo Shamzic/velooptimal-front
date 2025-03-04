@@ -17,5 +17,10 @@
     "nuxt-gtag": "^3.0.1",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.10.1",
+    "pinia": "^3.0.1",
+    "pinia-plugin-persistedstate": "^4.2.0"
   }
 }

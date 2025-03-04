@@ -15,7 +15,7 @@ import MenuCard from '../components/cards/menu-card.vue'
             Notre simulateur intelligent analyse vos besoins pour vous recommander le vélo idéal, 
             en tenant compte de votre pratique et de votre budget.
           </p>
-          <NuxtLink to="/simulator" class="btn btn-primary btn-lg animate-bounce">
+          <NuxtLink to="/simulateur" class="btn btn-primary btn-lg animate-bounce">
             Démarrer la simulation
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -41,7 +41,7 @@ import MenuCard from '../components/cards/menu-card.vue'
               En quelques clics, notre simulateur analyse vos besoins et votre pratique pour vous recommander le vélo parfaitement adapté.
             </p>
             <div class="card-actions justify-end">
-              <NuxtLink to="/simulator" class="btn btn-primary">
+              <NuxtLink to="/simulateur" class="btn btn-primary">
                 Lancer le simulateur
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

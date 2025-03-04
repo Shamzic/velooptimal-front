@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useSimulatorStore } from '../stores/simulator';
+
 interface Question {
   id: number;
   text: string;
@@ -17,17 +19,17 @@ const questions: Question[] = [
       { 
         id: 1, 
         text: "En ville uniquement",
-        points: { 'folding': 3, 'hybrid': 2, 'road': 1 }
+        points: { 'pliant': 3, 'vtc': 2, 'route': 1 }
       },
       { 
         id: 2, 
         text: "Sur route et chemins",
-        points: { 'gravel': 3, 'hybrid': 2, 'road': 1 }
+        points: { 'gravel': 3, 'vtc': 2, 'route': 1 }
       },
       { 
         id: 3, 
         text: "Principalement hors route",
-        points: { 'mtb': 3, 'gravel': 1 }
+        points: { 'vtt': 3, 'gravel': 1 }
       }
     ]
   },
@@ -38,17 +40,17 @@ const questions: Question[] = [
       { 
         id: 1, 
         text: "Moins de 5km",
-        points: { 'folding': 3, 'hybrid': 1 }
+        points: { 'pliant': 3, 'vtc': 1 }
       },
       { 
         id: 2, 
         text: "Entre 5 et 20km",
-        points: { 'hybrid': 3, 'gravel': 2, 'road': 2 }
+        points: { 'vtc': 3, 'gravel': 2, 'route': 2 }
       },
       { 
         id: 3, 
         text: "Plus de 20km",
-        points: { 'road': 3, 'gravel': 2 }
+        points: { 'route': 3, 'gravel': 2 }
       }
     ]
   },
@@ -59,17 +61,17 @@ const questions: Question[] = [
       { 
         id: 1, 
         text: "Débutant",
-        points: { 'hybrid': 3, 'folding': 2 }
+        points: { 'vtc': 3, 'pliant': 2 }
       },
       { 
         id: 2, 
         text: "Intermédiaire",
-        points: { 'gravel': 2, 'road': 2, 'mtb': 2 }
+        points: { 'gravel': 2, 'route': 2, 'vtt': 2 }
       },
       { 
         id: 3, 
         text: "Avancé",
-        points: { 'road': 3, 'mtb': 3 }
+        points: { 'route': 3, 'vtt': 3 }
       }
     ]
   },
@@ -80,17 +82,17 @@ const questions: Question[] = [
       { 
         id: 1, 
         text: "Dans un petit espace (appartement, transport en commun)",
-        points: { 'folding': 3 }
+        points: { 'pliant': 3 }
       },
       { 
         id: 2, 
         text: "Dans un garage ou local à vélo",
-        points: { 'hybrid': 1, 'road': 1, 'mtb': 1, 'gravel': 1 }
+        points: { 'vtc': 1, 'route': 1, 'vtt': 1, 'gravel': 1 }
       },
       { 
         id: 3, 
         text: "Je n'ai pas de contrainte particulière",
-        points: { 'road': 1, 'mtb': 1, 'gravel': 1 }
+        points: { 'route': 1, 'vtt': 1, 'gravel': 1 }
       }
     ]
   },
@@ -101,42 +103,59 @@ const questions: Question[] = [
       { 
         id: 1, 
         text: "Transport quotidien",
-        points: { 'hybrid': 3, 'folding': 2 }
+        points: { 'vtc': 3, 'pliant': 2 }
       },
       { 
         id: 2, 
         text: "Sport et loisir",
-        points: { 'road': 2, 'mtb': 2, 'gravel': 2 }
+        points: { 'route': 2, 'vtt': 2, 'gravel': 2 }
       }
     ]
   }
 ];
 
-const currentQuestion = ref(0);
-const answers = ref<number[]>([]);
-const showResult = ref(false);
-const bikeScores = ref<Record<string, number>>({});
-const recommendedBike = ref('');
+const store = useSimulatorStore();
+
+const currentQuestion = computed(() => store.currentQuestion);
+const answers = computed(() => store.answers);
+const showResult = computed(() => store.showResult);
+const bikeScores = computed(() => store.bikeScores);
+const recommendedBike = computed(() => store.recommendedBike || 'vtc');
+
+const currentBikeDescription = computed(() => bikeDescriptions[recommendedBike.value]);
+
+const otherOptions = computed(() => {
+  if (!bikeScores.value) return [];
+  return Object.entries(bikeScores.value)
+    .filter(([type]) => type !== recommendedBike.value)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([type, score]) => ({
+      type,
+      score,
+      ...bikeDescriptions[type]
+    }));
+});
 
 const bikeDescriptions = {
   'gravel': {
-    name: 'Gravel Bike',
+    name: 'Vélo Gravel',
     description: 'Polyvalent et robuste, parfait pour rouler sur route et chemins. Idéal pour l\'aventure et les longues distances sur terrains variés.'
   },
-  'mtb': {
-    name: 'Mountain Bike',
+  'vtt': {
+    name: 'Vélo Tout-Terrain (VTT)',
     description: 'Conçu pour les terrains accidentés et les sentiers. Parfait pour les amateurs de sensations fortes et de nature.'
   },
-  'hybrid': {
-    name: 'Hybrid Bike',
+  'vtc': {
+    name: 'Vélo Tout Chemin (VTC)',
     description: 'Le compromis idéal entre confort et polyvalence. Adapté à un usage quotidien sur tous types de surfaces.'
   },
-  'road': {
-    name: 'Road Bike',
+  'route': {
+    name: 'Vélo de Route',
     description: 'Léger et rapide, optimisé pour les longues distances sur route. Parfait pour le sport et la performance.'
   },
-  'folding': {
-    name: 'Folding Bike',
+  'pliant': {
+    name: 'Vélo Pliant',
     description: 'Pratique et compact, parfait pour les trajets multimodaux. Idéal pour les citadins qui manquent d\'espace.'
   }
 };
@@ -144,10 +163,10 @@ const bikeDescriptions = {
 const calculateResult = () => {
   const scores: Record<string, number> = {
     'gravel': 0,
-    'mtb': 0,
-    'hybrid': 0,
-    'road': 0,
-    'folding': 0
+    'vtt': 0,
+    'vtc': 0,
+    'route': 0,
+    'pliant': 0
   };
 
   answers.value.forEach((answerId, questionIndex) => {
@@ -160,26 +179,20 @@ const calculateResult = () => {
     }
   });
 
-  bikeScores.value = scores;
-  recommendedBike.value = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-  showResult.value = true;
+  store.calculateResult(scores);
 };
 
 const answerQuestion = (optionId: number) => {
-  answers.value[currentQuestion.value] = optionId;
+  store.answerQuestion(currentQuestion.value, optionId);
   if (currentQuestion.value < questions.length - 1) {
-    currentQuestion.value++;
+    store.nextQuestion();
   } else {
     calculateResult();
   }
 };
 
 const resetSimulator = () => {
-  currentQuestion.value = 0;
-  answers.value = [];
-  showResult.value = false;
-  bikeScores.value = {};
-  recommendedBike.value = '';
+  store.reset();
 };
 
 const progressPercentage = computed(() => {
@@ -255,14 +268,14 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
           </div>
 
           <!-- Section Résultats avec Animations -->
-          <div v-else class="space-y-6 animate-fade-in pb-32">
+          <div v-else class="space-y-6 animate-fade-in">
             <!-- Résultat Principal -->
             <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div class="card-body items-center text-center">
                 <h2 class="card-title text-3xl mb-6 text-primary">Votre vélo recommandé</h2>
                 <div class="max-w-2xl mx-auto">
-                  <h3 class="text-2xl font-bold mb-4">{{ bikeDescriptions[recommendedBike].name }}</h3>
-                  <p class="text-lg mb-8 opacity-80">{{ bikeDescriptions[recommendedBike].description }}</p>
+                  <h3 class="text-2xl font-bold mb-4">{{ currentBikeDescription.name }}</h3>
+                  <p class="text-lg mb-8 opacity-80">{{ currentBikeDescription.description }}</p>
                   
                   <div class="flex gap-4 justify-center">
                     <NuxtLink :to="'/' + recommendedBike" class="btn btn-primary btn-lg gap-2 group">
@@ -280,20 +293,20 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
             </div>
 
             <!-- Autres Options -->
-            <div class="card bg-base-100 shadow-xl">
+            <div class="card bg-base-100 shadow-xl mb-48">
               <div class="card-body">
                 <h3 class="card-title text-2xl mb-6">Autres options qui pourraient vous convenir</h3>
                 <div class="space-y-4">
                   <div 
-                    v-for="[type, score] in Object.entries(bikeScores).sort((a, b) => b[1] - a[1]).slice(1, 4)"
-                    :key="type"
+                    v-for="option in otherOptions"
+                    :key="option.type"
                     class="flex items-center justify-between p-6 bg-base-200 rounded-xl hover:bg-base-300 transition-colors duration-300"
                   >
                     <div>
-                      <h4 class="text-lg font-semibold">{{ bikeDescriptions[type].name }}</h4>
-                      <p class="text-sm opacity-70">{{ bikeDescriptions[type].description }}</p>
+                      <h4 class="text-lg font-semibold">{{ option.name }}</h4>
+                      <p class="text-sm opacity-70">{{ option.description }}</p>
                     </div>
-                    <NuxtLink :to="'/' + type" class="btn btn-ghost btn-sm">
+                    <NuxtLink :to="'/' + option.type" class="btn btn-ghost btn-sm">
                       En savoir plus
                     </NuxtLink>
                   </div>
@@ -329,4 +342,4 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
 .scale-102 {
   scale: 1.02;
 }
-</style>
+</style> 

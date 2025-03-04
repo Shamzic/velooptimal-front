@@ -3,7 +3,7 @@
     <nav class="grid grid-flow-col gap-4">
       <a class="link link-hover">À propos</a>
       <a class="link link-hover">Contact</a>
-      <a class="link link-hover">Simulateur</a>
+      <NuxtLink to="/simulateur" class="link link-hover">Simulateur</NuxtLink>
     </nav>
     <nav>
       <div class="grid grid-flow-col gap-4">
