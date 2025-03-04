@@ -268,47 +268,77 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
           </div>
 
           <!-- Section Résultats avec Animations -->
-          <div v-else class="space-y-4 sm:space-y-6 animate-fade-in">
+          <div v-else class="space-y-6 animate-fade-in">
             <!-- Résultat Principal -->
-            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
-              <div class="card-body items-center text-center p-4 sm:p-8">
-                <h2 class="card-title text-2xl sm:text-3xl mb-4 sm:mb-6 text-primary">Votre vélo recommandé</h2>
-                <div class="max-w-2xl mx-auto">
-                  <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{{ currentBikeDescription.name }}</h3>
-                  <p class="text-base sm:text-lg mb-6 sm:mb-8 opacity-80">{{ currentBikeDescription.description }}</p>
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 p-1">
+              <div class="bg-base-100 rounded-xl">
+                <div class="card-body items-center text-center p-6 sm:p-10">
+                  <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
                   
-                  <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                    <NuxtLink :to="'/' + recommendedBike" class="btn btn-primary btn-lg gap-2 group w-full sm:w-auto">
-                      Voir les recommandations
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </NuxtLink>
-                    <button @click="resetSimulator" class="btn btn-outline btn-lg w-full sm:w-auto">
-                      Recommencer
-                    </button>
+                  <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                    <Icon name="mdi:bicycle" class="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+                  </div>
+
+                  <h2 class="card-title text-2xl sm:text-3xl mb-2 text-primary font-bold">Votre vélo idéal</h2>
+                  <p class="text-base text-base-content/60 mb-8">Basé sur vos réponses, voici notre recommandation personnalisée</p>
+
+                  <div class="max-w-2xl w-full">
+                    <div class="bg-base-200 rounded-xl p-6 mb-8">
+                      <h3 class="text-2xl sm:text-3xl font-bold mb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        {{ currentBikeDescription.name }}
+                      </h3>
+                      <p class="text-base sm:text-lg opacity-80">{{ currentBikeDescription.description }}</p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                      <NuxtLink :to="'/' + recommendedBike" class="btn btn-primary btn-lg gap-2 group">
+                        <span>Voir les recommandations</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </NuxtLink>
+                      <button @click="resetSimulator" class="btn btn-outline btn-lg">
+                        Recommencer
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Autres Options -->
-            <div class="card bg-base-100 shadow-xl mb-24 sm:mb-48">
-              <div class="card-body p-4 sm:p-8">
-                <h3 class="card-title text-xl sm:text-2xl mb-4 sm:mb-6">Autres options qui pourraient vous convenir</h3>
-                <div class="space-y-3 sm:space-y-4">
+            <div class="bg-base-100 rounded-2xl shadow-lg">
+              <div class="p-6 sm:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                    <Icon name="ph:list-magnifying-glass" class="h-5 w-5 text-secondary" />
+                  </div>
+                  <h3 class="text-xl sm:text-2xl font-bold">Autres options à considérer</h3>
+                </div>
+
+                <div class="space-y-4">
                   <div 
                     v-for="option in otherOptions"
                     :key="option.type"
-                    class="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-6 bg-base-200 rounded-xl hover:bg-base-300 transition-colors duration-300 gap-3 sm:gap-4"
+                    class="group bg-base-200 hover:bg-base-300 rounded-xl p-5 transition-all duration-300"
                   >
-                    <div>
-                      <h4 class="text-base sm:text-lg font-semibold mb-2 sm:mb-0">{{ option.name }}</h4>
-                      <p class="text-xs sm:text-sm opacity-70">{{ option.description }}</p>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                      <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                          <h4 class="text-lg font-semibold">{{ option.name }}</h4>
+                          <div class="px-2 py-1 rounded-full bg-base-300 text-xs">
+                            Score: {{ option.score }}
+                          </div>
+                        </div>
+                        <p class="text-sm opacity-70">{{ option.description }}</p>
+                      </div>
+                      <NuxtLink :to="'/' + option.type" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-base-100 hover:bg-primary hover:text-white border border-base-300 hover:border-primary shadow-sm transition-all duration-300">
+                        <span>Découvrir</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </NuxtLink>
                     </div>
-                    <NuxtLink :to="'/' + option.type" class="btn btn-ghost btn-sm w-full sm:w-auto">
-                      En savoir plus
-                    </NuxtLink>
                   </div>
                 </div>
               </div>
