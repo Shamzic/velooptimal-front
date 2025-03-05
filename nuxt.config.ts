@@ -24,10 +24,6 @@ export default defineNuxtConfig({
     }
   },
 
-  gtag: {
-    id: 'G-VS77H278N4'
-  },
-
   app: {
     head: {
       meta: [
