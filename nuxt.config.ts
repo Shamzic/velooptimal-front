@@ -20,6 +20,9 @@ export default defineNuxtConfig({
         loadScript: true,
         enableRouterSync: true,
         trackOnNextTick: false,
+      },
+      gtag: {
+        id: 'G-VS77H278N4'
       }
     }
   },
