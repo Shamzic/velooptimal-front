@@ -5,22 +5,11 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
-    '@pinia/nuxt',
-    '@zadigetvoltaire/nuxt-gtm'
+    '@pinia/nuxt'
   ],
 
   runtimeConfig: {
     public: {
-      gtm: {
-        id: 'GTM-NXH6VVL7',
-        defer: true,
-        compatibility: false,
-        enabled: true,
-        debug: false,
-        loadScript: true,
-        enableRouterSync: true,
-        trackOnNextTick: false,
-      },
       gtag: {
         id: 'G-VS77H278N4'
       }
