@@ -183,37 +183,32 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
 
                   <!-- Résumé des réponses -->
                   <div class="w-full mb-8">
-                    <div class="collapse collapse-plus bg-base-200/50 rounded-xl border border-base-300">
+                    <div class="collapse collapse-arrow bg-base-200">
                       <input type="checkbox" /> 
-                      <div class="collapse-title py-3 px-4">
-                        <div class="flex items-center gap-2">
-                          <Icon name="material-symbols:format-list-bulleted" class="w-5 h-5 text-primary" />
-                          <span class="font-medium">Vos réponses</span>
-                          <span class="text-sm opacity-60">({{ answeredQuestions.length }} questions)</span>
-                        </div>
+                      <div class="collapse-title text-xl font-medium">
+                        Voir vos réponses
                       </div>
-                      <div class="collapse-content px-4 pb-4">
-                        <div class="space-y-2 mt-2">
+                      <div class="collapse-content">
+                        <div class="space-y-4">
                           <div v-for="question in answeredQuestions" :key="question.id" 
-                               class="relative bg-base-100 rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all duration-200 cursor-pointer group"
-                               @click="store.editQuestion(question.questionNumber - 1)">
-                            <div class="flex items-start justify-between gap-4 p-3">
+                               class="bg-base-100 p-4 rounded-lg hover:bg-base-300 transition-colors">
+                            <div class="flex justify-between items-start gap-4">
                               <div class="flex-1 min-w-0">
-                                <div class="flex items-baseline gap-2 mb-1">
-                                  <span class="text-xs font-medium text-primary">Question {{ question.questionNumber }}</span>
-                                  <p class="text-sm">{{ question.text }}</p>
+                                <div class="flex items-center justify-between mb-2">
+                                  <h4 class="font-medium">Question {{ question.questionNumber }}</h4>
+                                  <button 
+                                    class="btn btn-ghost btn-sm ml-2"
+                                    @click.stop="store.editQuestion(question.questionNumber - 1)"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                  </button>
                                 </div>
-                                <div class="flex items-center gap-1.5 text-sm">
-                                  <Icon name="material-symbols:check-circle" class="w-3.5 h-3.5 text-success flex-shrink-0" />
-                                  <p class="font-medium text-success">
-                                    {{ question.selectedOption?.text }}
-                                  </p>
-                                </div>
-                              </div>
-                              <div 
-                                class="btn btn-ghost btn-xs px-2 opacity-50 group-hover:opacity-100 group-hover:bg-primary/10 transition-all pointer-events-none"
-                              >
-                                <Icon name="material-symbols:edit-outline" class="w-4 h-4" />
+                                <p class="text-sm mb-2 break-words">{{ question.text }}</p>
+                                <p class="text-sm font-medium text-primary break-words">
+                                  Réponse : {{ question.selectedOption?.text }}
+                                </p>
                               </div>
                             </div>
                           </div>
