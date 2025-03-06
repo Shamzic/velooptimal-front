@@ -1,15 +1,7 @@
 <script setup lang="ts">
 import { useSimulatorStore } from '../stores/simulator';
-
-interface Question {
-  id: number;
-  text: string;
-  options: Array<{
-    id: number;
-    text: string;
-    points: Record<string, number>;
-  }>;
-}
+import type { Question, BikeType } from '../types/simulator';
+import { bikeDescriptions } from '../data/bikes';
 
 const questions: Question[] = [
   {
@@ -120,7 +112,7 @@ const currentQuestion = computed(() => store.currentQuestion);
 const answers = computed(() => store.answers);
 const showResult = computed(() => store.showResult);
 const bikeScores = computed(() => store.bikeScores);
-const recommendedBike = computed(() => store.recommendedBike || 'vtc');
+const recommendedBike = computed(() => store.recommendedBike as BikeType || 'vtc');
 
 const currentBikeDescription = computed(() => bikeDescriptions[recommendedBike.value]);
 
@@ -133,32 +125,9 @@ const otherOptions = computed(() => {
     .map(([type, score]) => ({
       type,
       score,
-      ...bikeDescriptions[type]
+      ...bikeDescriptions[type as BikeType]
     }));
 });
-
-const bikeDescriptions = {
-  'gravel': {
-    name: 'Vélo Gravel',
-    description: 'Polyvalent et robuste, parfait pour rouler sur route et chemins. Idéal pour l\'aventure et les longues distances sur terrains variés.'
-  },
-  'vtt': {
-    name: 'Vélo Tout-Terrain (VTT)',
-    description: 'Conçu pour les terrains accidentés et les sentiers. Parfait pour les amateurs de sensations fortes et de nature.'
-  },
-  'vtc': {
-    name: 'Vélo Tout Chemin (VTC)',
-    description: 'Le compromis idéal entre confort et polyvalence. Adapté à un usage quotidien sur tous types de surfaces.'
-  },
-  'route': {
-    name: 'Vélo de Route',
-    description: 'Léger et rapide, optimisé pour les longues distances sur route. Parfait pour le sport et la performance.'
-  },
-  'pliant': {
-    name: 'Vélo Pliant',
-    description: 'Pratique et compact, parfait pour les trajets multimodaux. Idéal pour les citadins qui manquent d\'espace.'
-  }
-};
 
 const calculateResult = () => {
   const scores: Record<string, number> = {
