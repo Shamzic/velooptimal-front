@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import type { Product } from '../../types/products.js';
 
@@ -7,11 +6,17 @@ const props = defineProps({
         type: Object as PropType<Product>,
         required: true
     }
-})
+});
 
-const title = computed(() => `${props.product.brand} - ${props.product.model}`)
+const title = computed(() => `${props.product.brand} - ${props.product.model}`);
 
-
+const formatPrice = (price: number | string): string => {
+    const numericPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+    }).format(numericPrice);
+};
 </script>
 
 <template>
@@ -24,7 +29,7 @@ const title = computed(() => `${props.product.brand} - ${props.product.model}`)
   <div class="card-body">
     <div class="flex flex-row items-center justify-around">
         <h2 class="card-title">{{title}}</h2>
-        <div class="ml-4 font-extrabold text-primary">${{product.price}}</div>
+        <div class="ml-4 font-extrabold text-primary">{{ formatPrice(product.price) }}</div>
     </div>
     <div class="card-actions justify-end">
       <a class="btn" :href="product.url" target="_blank">Voir le vélo</a>
