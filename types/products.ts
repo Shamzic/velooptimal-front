@@ -10,3 +10,9 @@ export type Product = {
         negative: number
     }
 }
+
+export interface EnrichedProduct extends Product {
+    features?: string[];
+    pros?: string[];
+    cons?: string[];
+}

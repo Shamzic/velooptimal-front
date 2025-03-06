@@ -6,10 +6,10 @@ const mobileMenuOpen = ref(false);
 
 const pages = [
   { id: 0, name: 'SIMULATEUR', url: '/simulateur', type: 'simulator' },
-  { id: 1, name: 'VTC', url: '/vtc', type: 'comparator' },
-  { id: 2, name: 'GRAVEL', url: '/gravel', type: 'comparator' },
+  { id: 1, name: 'GRAVEL', url: '/gravel', type: 'comparator' },
+  { id: 2, name: 'ROUTE', url: '/route', type: 'comparator' },
   { id: 3, name: 'VTT', url: '/vtt', type: 'comparator' },
-  { id: 4, name: 'ROUTE', url: '/route', type: 'comparator' },
+  { id: 4, name: 'VTC', url: '/vtc', type: 'comparator' },
   { id: 5, name: 'PLIANT', url: '/pliant', type: 'comparator' },
 ];
 

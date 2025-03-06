@@ -1,19 +1,77 @@
 <script setup lang="ts">
 import BikesList from '../components/pages/bikes-list.vue';
-import type { Product } from '@/types/products.js';
-
-const products: Product[] = [
-  { id: 0, brand: 'Rockrider', model: 'EXPL 500', price: 499, url: 'https://www.decathlon.fr/p/velo-vtt-randonnee-expl-500-29/_/R-p-330628?mc=8615848&c=noir', imgSrc: 'https://contents.mediadecathlon.com/p2623157/k$56a387f834df8816d5aabd60fd676bba/sq/velo-vtt-randonnee-expl-500-noir-29.jpg?format=auto&f=1200x1200'},
-  { id: 1, brand: 'Triban', model: 'GRVL 120', price: 800, url: 'https://www.decathlon.fr/p/velo-gravel-triban-grvl-120/_/R-p-312397?mc=8575940&c=vert', imgSrc: 'https://contents.mediadecathlon.com/p1956473/k$16ac0a30a404e2ecf763d5d98f8dec80/sq/velo-gravel-triban-grvl-520-homme-subcompact.jpg?format=auto&f=1200x1200'},
-  { id: 2, brand: 'Triban', model: 'GRVL 520', price: 1200, url: 'https://www.decathlon.fr/p/velo-gravel-triban-grvl-520-homme-subcompact/_/R-p-313015?mc=8587697', imgSrc:'https://contents.mediadecathlon.com/p2579595/k$a4d99da7969620f9715ba2c7ad39b833/sq/velo-gravel-triban-grvl-120.jpg?format=auto&f=1200x1200' },
-];
+import { vttProducts } from '@/data/vtt';
 </script>
 
 <template>
-  <bikes-list
-    title="Vélos tout-terrain"
-    :products="products"
-  />
+  <div class="min-h-screen bg-gradient-to-br from-base-200/50 via-base-100 to-base-200/50">
+    <!-- Hero section -->
+    <section class="py-16 bg-base-200">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-5xl font-bold mb-6">
+            Les meilleurs VTT
+          </h1>
+          <p class="text-xl text-base-content/70 mb-8">
+            Découvrez notre sélection des VTT offrant le meilleur rapport qualité-prix pour vos sorties tout-terrain.
+          </p>
+          <div class="flex justify-center gap-8 text-center">
+            <div>
+              <div class="text-4xl font-bold text-primary mb-2">3+</div>
+              <div class="text-sm text-base-content/70">Modèles testés</div>
+            </div>
+            <div>
+              <div class="text-4xl font-bold text-primary mb-2">400€+</div>
+              <div class="text-sm text-base-content/70">Prix moyen</div>
+            </div>
+            <div>
+              <div class="text-4xl font-bold text-primary mb-2">4.3/5</div>
+              <div class="text-sm text-base-content/70">Note moyenne</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guide d'achat -->
+    <section class="py-12 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl font-bold mb-8">Guide d'achat VTT</h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card bg-base-200">
+              <div class="card-body">
+                <h3 class="card-title">Pourquoi choisir un VTT ?</h3>
+                <ul class="list-disc list-inside space-y-2">
+                  <li>Parfait pour les chemins accidentés</li>
+                  <li>Suspension confortable</li>
+                  <li>Pneus adaptés au terrain</li>
+                  <li>Position sportive</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card bg-base-200">
+              <div class="card-body">
+                <h3 class="card-title">Points clés à vérifier</h3>
+                <ul class="list-disc list-inside space-y-2">
+                  <li>Type de suspension</li>
+                  <li>Système de freinage</li>
+                  <li>Taille des roues</li>
+                  <li>Qualité du cadre</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Liste des vélos -->
+    <bikes-list
+      title="Notre sélection de VTT"
+      :products="vttProducts"
+    />
+  </div>
 </template>
 
 <style scoped>

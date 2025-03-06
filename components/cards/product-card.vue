@@ -17,23 +17,62 @@ const formatPrice = (price: number | string): string => {
         currency: 'EUR',
     }).format(numericPrice);
 };
+
+const showDetails = ref(false);
 </script>
 
 <template>
-<div class="card bg-base-300 w-96 h-96 shadow-xl">
-  <figure>
+<div 
+  class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden"
+  @mouseenter="showDetails = true"
+  @mouseleave="showDetails = false"
+>
+  <figure class="relative h-64 overflow-hidden">
     <img
       :src="product.imgSrc"
-      :alt="title" />
+      :alt="title"
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+    />
   </figure>
-  <div class="card-body">
-    <div class="flex flex-row items-center justify-around">
-        <h2 class="card-title">{{title}}</h2>
-        <div class="ml-4 font-extrabold text-primary">{{ formatPrice(product.price) }}</div>
-    </div>
-    <div class="card-actions justify-end">
-      <a class="btn" :href="product.url" target="_blank">Voir le vélo</a>
+
+  <div class="card-body p-6">
+    <div class="flex flex-col gap-3">
+      <div class="flex items-start justify-between">
+        <h2 class="card-title text-lg font-bold group-hover:text-primary transition-colors">
+          {{title}}
+        </h2>
+        <div class="badge badge-primary badge-lg font-bold">
+          {{ formatPrice(product.price) }}
+        </div>
+      </div>
+
+      <div 
+        class="flex flex-col items-center mt-4 transform transition-all duration-300"
+        :class="showDetails ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'"
+      >
+        <a 
+          :href="product.url" 
+          target="_blank"
+          class="relative flex items-center justify-center w-full px-6 py-3 text-sm font-medium transition-all duration-300 rounded-lg bg-base-200 hover:bg-base-300 group/btn"
+        >
+          <span class="relative flex items-center gap-2">
+            Voir le vélo
+            <Icon
+              name="material-symbols:arrow-right-alt-rounded" 
+              class="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1" 
+            />
+          </span>
+          <div class="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover/btn:w-full" />
+        </a>
+      </div>
     </div>
   </div>
 </div>
 </template>
+
+<style scoped>
+.card {
+  backdrop-filter: blur(10px);
+  transform: translateZ(0);
+}
+</style>
