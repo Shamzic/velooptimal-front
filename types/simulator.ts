@@ -8,7 +8,13 @@ export interface Question {
   }>;
 }
 
-export type BikeType = 'gravel' | 'vtt' | 'vtc' | 'route' | 'pliant';
+export enum BikeType {
+  GRAVEL = 'gravel',
+  VTT = 'vtt',
+  VTC = 'vtc',
+  ROUTE = 'route',
+  PLIANT = 'pliant'
+}
 
 export interface BikeDescription {
   name: string;

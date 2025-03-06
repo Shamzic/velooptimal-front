@@ -26,6 +26,12 @@ export const useSimulatorStore = defineStore('simulator', {
       this.currentQuestion++;
     },
 
+    previousQuestion() {
+      if (this.currentQuestion > 0) {
+        this.currentQuestion--;
+      }
+    },
+
     calculateResult(scores: Record<string, number>) {
       this.bikeScores = scores;
       this.recommendedBike = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSimulatorStore } from '../stores/simulator';
-import type { BikeType } from '../types/simulator';
+import { BikeType } from '../types/simulator';
 import { bikeDescriptions } from '../data/bikes';
 import { questions } from '../data/questions';
 
@@ -10,7 +10,10 @@ const currentQuestion = computed(() => store.currentQuestion);
 const answers = computed(() => store.answers);
 const showResult = computed(() => store.showResult);
 const bikeScores = computed(() => store.bikeScores);
-const recommendedBike = computed(() => store.recommendedBike as BikeType || 'vtc');
+const recommendedBike = computed(() => {
+  const bike = store.recommendedBike;
+  return bike ? bike as BikeType : BikeType.VTC;
+});
 
 const currentBikeDescription = computed(() => bikeDescriptions[recommendedBike.value]);
 
@@ -29,11 +32,11 @@ const otherOptions = computed(() => {
 
 const calculateResult = () => {
   const scores: Record<string, number> = {
-    'gravel': 0,
-    'vtt': 0,
-    'vtc': 0,
-    'route': 0,
-    'pliant': 0
+    [BikeType.GRAVEL]: 0,
+    [BikeType.VTT]: 0,
+    [BikeType.VTC]: 0,
+    [BikeType.ROUTE]: 0,
+    [BikeType.PLIANT]: 0
   };
 
   answers.value.forEach((answerId, questionIndex) => {
@@ -56,6 +59,10 @@ const answerQuestion = (optionId: number) => {
   } else {
     calculateResult();
   }
+};
+
+const goToPreviousQuestion = () => {
+  store.previousQuestion();
 };
 
 const resetSimulator = () => {
@@ -127,6 +134,19 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
                       class="w-full p-3 sm:p-4 rounded-lg border-2 border-base-300 hover:border-primary hover:bg-primary hover:text-primary-content transition-all duration-300 transform hover:scale-102 hover:shadow-lg text-left text-sm sm:text-base"
                     >
                       {{ option.text }}
+                    </button>
+                  </div>
+                  
+                  <!-- Bouton Retour -->
+                  <div class="mt-6 flex justify-start" v-if="currentQuestion > 0">
+                    <button 
+                      @click="goToPreviousQuestion" 
+                      class="btn btn-outline btn-sm gap-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Question précédente
                     </button>
                   </div>
                 </div>

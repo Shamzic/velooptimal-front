@@ -1,4 +1,5 @@
 import type { Question } from '../types/simulator';
+import { BikeType } from '../types/simulator';
 
 export const questions: Question[] = [
   {
@@ -8,17 +9,17 @@ export const questions: Question[] = [
       { 
         id: 1, 
         text: "En ville uniquement",
-        points: { 'pliant': 3, 'vtc': 2, 'route': 1 }
+        points: { [BikeType.PLIANT]: 3, [BikeType.VTC]: 2, [BikeType.ROUTE]: 1 }
       },
       { 
         id: 2, 
         text: "Sur route et chemins",
-        points: { 'gravel': 3, 'vtc': 2, 'route': 1 }
+        points: { [BikeType.GRAVEL]: 3, [BikeType.VTC]: 2, [BikeType.ROUTE]: 1 }
       },
       { 
         id: 3, 
         text: "Principalement hors route",
-        points: { 'vtt': 3, 'gravel': 1 }
+        points: { [BikeType.VTT]: 3, [BikeType.GRAVEL]: 1 }
       }
     ]
   },
@@ -29,17 +30,17 @@ export const questions: Question[] = [
       { 
         id: 1, 
         text: "Moins de 5km",
-        points: { 'pliant': 3, 'vtc': 1 }
+        points: { [BikeType.PLIANT]: 3, [BikeType.VTC]: 1 }
       },
       { 
         id: 2, 
         text: "Entre 5 et 20km",
-        points: { 'vtc': 3, 'gravel': 2, 'route': 2 }
+        points: { [BikeType.VTC]: 3, [BikeType.GRAVEL]: 2, [BikeType.ROUTE]: 2 }
       },
       { 
         id: 3, 
         text: "Plus de 20km",
-        points: { 'route': 3, 'gravel': 2 }
+        points: { [BikeType.ROUTE]: 3, [BikeType.GRAVEL]: 2 }
       }
     ]
   },
@@ -50,17 +51,17 @@ export const questions: Question[] = [
       { 
         id: 1, 
         text: "Débutant",
-        points: { 'vtc': 3, 'pliant': 2 }
+        points: { [BikeType.VTC]: 3, [BikeType.PLIANT]: 2 }
       },
       { 
         id: 2, 
         text: "Intermédiaire",
-        points: { 'gravel': 2, 'route': 2, 'vtt': 2 }
+        points: { [BikeType.GRAVEL]: 2, [BikeType.ROUTE]: 2, [BikeType.VTT]: 2 }
       },
       { 
         id: 3, 
         text: "Avancé",
-        points: { 'route': 3, 'vtt': 3 }
+        points: { [BikeType.ROUTE]: 3, [BikeType.VTT]: 3 }
       }
     ]
   },
@@ -71,17 +72,17 @@ export const questions: Question[] = [
       { 
         id: 1, 
         text: "Dans un petit espace (appartement, transport en commun)",
-        points: { 'pliant': 3 }
+        points: { [BikeType.PLIANT]: 3 }
       },
       { 
         id: 2, 
         text: "Dans un garage ou local à vélo",
-        points: { 'vtc': 1, 'route': 1, 'vtt': 1, 'gravel': 1 }
+        points: { [BikeType.VTC]: 1, [BikeType.ROUTE]: 1, [BikeType.VTT]: 1, [BikeType.GRAVEL]: 1 }
       },
       { 
         id: 3, 
         text: "Je n'ai pas de contrainte particulière",
-        points: { 'route': 1, 'vtt': 1, 'gravel': 1 }
+        points: { [BikeType.ROUTE]: 1, [BikeType.VTT]: 1, [BikeType.GRAVEL]: 1 }
       }
     ]
   },
@@ -92,12 +93,12 @@ export const questions: Question[] = [
       { 
         id: 1, 
         text: "Transport quotidien",
-        points: { 'vtc': 3, 'pliant': 2 }
+        points: { [BikeType.VTC]: 3, [BikeType.PLIANT]: 2 }
       },
       { 
         id: 2, 
         text: "Sport et loisir",
-        points: { 'route': 2, 'vtt': 2, 'gravel': 2 }
+        points: { [BikeType.ROUTE]: 2, [BikeType.VTT]: 2, [BikeType.GRAVEL]: 2 }
       }
     ]
   }
