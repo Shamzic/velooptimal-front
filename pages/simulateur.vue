@@ -233,7 +233,8 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
                         </svg>
                       </NuxtLink>
                       <button @click="resetSimulator" class="btn btn-outline btn-lg">
-                        Recommencer
+                        Faire une nouvelle simulation
+                        <Icon name="ph:arrows-counter-clockwise-bold" class="h-5 w-5" />
                       </button>
                     </div>
                   </div>
