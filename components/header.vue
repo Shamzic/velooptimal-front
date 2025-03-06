@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 
 const title = ref('Optimal Gear');
 const mobileMenuOpen = ref(false);
+const dropdownOpen = ref(false);
 
 const pages = [
   { id: 0, name: 'SIMULATEUR', url: '/simulateur', type: 'simulator' },
@@ -25,8 +26,7 @@ const closeMenus = () => {
   if (details) details.removeAttribute('open');
   
   // Ferme le dropdown desktop
-  const dropdownCheckbox = document.querySelector('.dropdown-content');
-  if (dropdownCheckbox) dropdownCheckbox.blur();
+  dropdownOpen.value = false;
 };
 
 const toggleMobileMenu = () => {
@@ -81,14 +81,26 @@ const toggleMobileMenu = () => {
           {{ simulatorPage.name }}
         </NuxtLink>
         <div class="h-8 w-px bg-base-300"></div>
-        <div class="dropdown dropdown-hover">
-          <div tabindex="0" role="button" class="btn btn-ghost text-lg m-1">
+        <div 
+          class="dropdown"
+          @mouseover="dropdownOpen = true"
+          @mouseleave="dropdownOpen = false"
+        >
+          <div 
+            tabindex="0" 
+            role="button" 
+            class="btn btn-ghost text-lg m-1"
+          >
             LES MEILLEURS VÉLOS
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
           </div>
-          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-full min-w-[200px]">
+          <ul 
+            tabindex="0" 
+            class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-full min-w-[200px]"
+            :class="{ 'hidden': !dropdownOpen }"
+          >
             <li v-for="page in comparatorPages" :key="page.id">
               <NuxtLink :to="page.url" class="text-base whitespace-nowrap" @click="closeMenus">{{ page.name }}</NuxtLink>
             </li>
