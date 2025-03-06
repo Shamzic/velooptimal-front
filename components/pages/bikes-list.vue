@@ -52,8 +52,6 @@ const filteredProducts = computed(() => {
     })
     // Appliquer les filtres
     .filter(product => {
-      const productPrice = Number(product.price);
-      
       const matchesSearch = searchQuery.value === '' || 
         product.brand.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         product.model.toLowerCase().includes(searchQuery.value.toLowerCase());
@@ -61,20 +59,15 @@ const filteredProducts = computed(() => {
       const matchesBrand = selectedBrands.value.length === 0 || 
         selectedBrands.value.includes(product.brand);
       
-      // Utiliser toFixed(2) pour éviter les problèmes de précision des nombres flottants
-      const normalizedPrice = Number(productPrice.toFixed(2));
-      const normalizedMin = Number(priceRange.value[0].toFixed(2));
-      const normalizedMax = Number(priceRange.value[1].toFixed(2));
-      
-      const matchesPrice = normalizedPrice >= normalizedMin && normalizedPrice <= normalizedMax;
+      const productPrice = Number(product.price);
+      const matchesPrice = productPrice >= priceRange.value[0] && productPrice <= priceRange.value[1];
 
-      // Debug plus détaillé
+      // Debug des comparaisons de prix
       console.log({
         product: `${product.brand} ${product.model}`,
-        id: product.id,
-        price: normalizedPrice,
-        min: normalizedMin,
-        max: normalizedMax,
+        price: productPrice,
+        min: priceRange.value[0],
+        max: priceRange.value[1],
         matches: matchesPrice
       });
 
@@ -82,23 +75,6 @@ const filteredProducts = computed(() => {
     })
     // Trier par prix
     .sort((a, b) => Number(a.price) - Number(b.price));
-});
-
-// Animation au scroll
-const productsContainer = ref(null);
-onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        const target = entry.target as HTMLElement;
-        target.classList.add('animate-fade-in');
-        target.style.animationDelay = `${index * 0.1}s`;
-      }
-    });
-  }, { threshold: 0.1 });
-
-  const cards = document.querySelectorAll('.product-card');
-  cards.forEach(card => observer.observe(card));
 });
 </script>
 
@@ -160,21 +136,18 @@ onMounted(() => {
     </div>
 
     <!-- Résultats -->
-    <div 
-      ref="productsContainer"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    <TransitionGroup
+      name="product"
+      tag="div"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative"
     >
-      <div 
+      <product-card 
         v-for="product in filteredProducts" 
         :key="product.id"
-        class="product-card opacity-0"
-      >
-        <product-card 
-          :product="product"
-          class="h-full"
-        />
-      </div>
-    </div>
+        :product="product"
+        class="h-full"
+      />
+    </TransitionGroup>
 
     <!-- Message si aucun résultat -->
     <div 
@@ -193,23 +166,25 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@keyframes fade-in {
-  from { 
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateY(0);
-  }
+.product-move,
+.product-enter-active,
+.product-leave-active {
+  transition: all 0.5s ease;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
+.product-enter-from,
+.product-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.product-leave-active {
+  position: absolute;
 }
 
 .grid {
   scroll-padding: 1rem;
+  position: relative;
 }
 
 .range {
