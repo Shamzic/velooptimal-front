@@ -6,6 +6,7 @@ interface SimulatorState {
   showResult: boolean;
   bikeScores: Record<string, number>;
   recommendedBike: string;
+  isEditing: boolean;
 }
 
 export const useSimulatorStore = defineStore('simulator', {
@@ -14,7 +15,8 @@ export const useSimulatorStore = defineStore('simulator', {
     answers: [],
     showResult: false,
     bikeScores: {},
-    recommendedBike: ''
+    recommendedBike: '',
+    isEditing: false
   }),
 
   actions: {
@@ -32,10 +34,17 @@ export const useSimulatorStore = defineStore('simulator', {
       }
     },
 
+    editQuestion(questionId: number) {
+      this.currentQuestion = questionId;
+      this.showResult = false;
+      this.isEditing = true;
+    },
+
     calculateResult(scores: Record<string, number>) {
       this.bikeScores = scores;
       this.recommendedBike = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
       this.showResult = true;
+      this.isEditing = false;
     },
 
     reset() {
@@ -44,6 +53,7 @@ export const useSimulatorStore = defineStore('simulator', {
       this.showResult = false;
       this.bikeScores = {};
       this.recommendedBike = '';
+      this.isEditing = false;
     }
   },
 

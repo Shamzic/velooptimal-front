@@ -10,12 +10,22 @@ const currentQuestion = computed(() => store.currentQuestion);
 const answers = computed(() => store.answers);
 const showResult = computed(() => store.showResult);
 const bikeScores = computed(() => store.bikeScores);
+const isEditing = computed(() => store.isEditing);
+
 const recommendedBike = computed(() => {
   const bike = store.recommendedBike;
   return bike ? bike as BikeType : BikeType.VTC;
 });
 
 const currentBikeDescription = computed(() => bikeDescriptions[recommendedBike.value]);
+
+const answeredQuestions = computed(() => {
+  return questions.map((question, index) => ({
+    ...question,
+    selectedOption: question.options.find(opt => opt.id === answers.value[index]),
+    questionNumber: index + 1
+  })).filter(q => q.selectedOption);
+});
 
 const otherOptions = computed(() => {
   if (!bikeScores.value) return [];
@@ -124,6 +134,7 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
                 <div class="card-body p-4 sm:p-8">
                   <h2 class="card-title text-xl sm:text-2xl mb-4 sm:mb-8 text-primary">
                     Question {{ currentQuestion + 1 }}/{{ questions.length }}
+                    <span v-if="isEditing" class="text-sm font-normal text-base-content/60">(Modification)</span>
                   </h2>
                   <p class="text-lg sm:text-xl mb-6 sm:mb-8">{{ questions[currentQuestion].text }}</p>
                   <div class="space-y-3 sm:space-y-4">
@@ -132,6 +143,7 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
                       :key="option.id"
                       @click="answerQuestion(option.id)"
                       class="w-full p-3 sm:p-4 rounded-lg border-2 border-base-300 hover:border-primary hover:bg-primary hover:text-primary-content transition-all duration-300 transform hover:scale-102 hover:shadow-lg text-left text-sm sm:text-base"
+                      :class="{ 'border-primary bg-primary/10': answers[currentQuestion] === option.id }"
                     >
                       {{ option.text }}
                     </button>
@@ -168,6 +180,47 @@ const slideLeaveToClass = "opacity-0 transform -translate-x-full";
 
                   <h2 class="card-title text-2xl sm:text-3xl mb-2 text-primary font-bold">Votre vélo idéal</h2>
                   <p class="text-base text-base-content/60 mb-8">Basé sur vos réponses, voici notre recommandation personnalisée</p>
+
+                  <!-- Résumé des réponses -->
+                  <div class="w-full mb-8">
+                    <div class="collapse collapse-plus bg-base-200/50 rounded-xl border border-base-300">
+                      <input type="checkbox" /> 
+                      <div class="collapse-title py-3 px-4">
+                        <div class="flex items-center gap-2">
+                          <Icon name="material-symbols:format-list-bulleted" class="w-5 h-5 text-primary" />
+                          <span class="font-medium">Vos réponses</span>
+                          <span class="text-sm opacity-60">({{ answeredQuestions.length }} questions)</span>
+                        </div>
+                      </div>
+                      <div class="collapse-content px-4 pb-4">
+                        <div class="space-y-2 mt-2">
+                          <div v-for="question in answeredQuestions" :key="question.id" 
+                               class="relative bg-base-100 rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all duration-200 cursor-pointer group"
+                               @click="store.editQuestion(question.questionNumber - 1)">
+                            <div class="flex items-start justify-between gap-4 p-3">
+                              <div class="flex-1 min-w-0">
+                                <div class="flex items-baseline gap-2 mb-1">
+                                  <span class="text-xs font-medium text-primary">Question {{ question.questionNumber }}</span>
+                                  <p class="text-sm">{{ question.text }}</p>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-sm">
+                                  <Icon name="material-symbols:check-circle" class="w-3.5 h-3.5 text-success flex-shrink-0" />
+                                  <p class="font-medium text-success">
+                                    {{ question.selectedOption?.text }}
+                                  </p>
+                                </div>
+                              </div>
+                              <div 
+                                class="btn btn-ghost btn-xs px-2 opacity-50 group-hover:opacity-100 group-hover:bg-primary/10 transition-all pointer-events-none"
+                              >
+                                <Icon name="material-symbols:edit-outline" class="w-4 h-4" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="max-w-2xl w-full">
                     <div class="bg-base-200 rounded-xl p-6 mb-8">
